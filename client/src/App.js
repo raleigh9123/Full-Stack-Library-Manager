@@ -1,42 +1,34 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from 'react-router-dom';
 
-class App extends React.Component {
+import './styles/global.css';
 
-  componentDidMount() {
-    fetch('http://localhost:5000/api/courses')
-      .then(res => res.json())
-      .then((data) => {
-        this.setState({
-          contacts: data
-        })
-      })
-  }
+import Header from './components/Header';
+import Courses from './components/Courses';
+import CourseDetail from './components/CourseDetail';
+import CreateCourse from './components/CreateCourse';
+import NotFound from './components/NotFound';
+import UserSignIn from './components/UserSignIn';
+import UserSignUp from './components/UserSignUp';
+import UpdateCourse from './components/UpdateCourse';
 
-  state = {
-    courses: [
-
-    ]
-  }
-
-  render() {
-    return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+export default () => (
+  <Router>
+    <div>
+      <Route path="/" component={Header} />
+      <Switch>
+        <Route exact path="/courses" component={Courses} />
+        <Route path="/courses/1" component={CourseDetail} />
+        <Route path="/courses/new" component={CreateCourse} />
+        <Route path="/courses/update" component={UpdateCourse} />
+        <Route path="/signin" component={UserSignIn} />
+        <Route path="/signup" component={UserSignUp} />
+        <Route path="/" component={NotFound} />
+      </Switch>
     </div>
-    )
-  }
-}
-
-export default App;
+  </Router>
+)
