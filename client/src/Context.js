@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
+import Utility from './Utility';
 // Add Cookies to Persist User Authentication
 
 const Context = React.createContext(); 
 
 export class Provider extends Component {
 
-  state = {};
+  state = {
+  };
 
   constructor() {
     super();
+    this.utility = new Utility();
   }
 
   render() {
-    const value = {};
+    const value = {
+        actions: {
+        }
+    };
     return (
       <Context.Provider value={value}>
         {this.props.children}

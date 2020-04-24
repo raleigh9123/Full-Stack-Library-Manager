@@ -4,6 +4,7 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
+import withContext from './Context';
 
 import './styles/global.css';
 
@@ -16,12 +17,14 @@ import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
 import UpdateCourse from './components/UpdateCourse';
 
+const CoursesWContext = withContext(Courses);
+
 export default () => (
   <Router>
     <div>
       <Route path="/" component={Header} />
       <Switch>
-        <Route exact path="/courses" component={Courses} />
+        <Route exact path="/courses" component={CoursesWContext} />
         <Route path="/courses/1" component={CourseDetail} />
         <Route path="/courses/new" component={CreateCourse} />
         <Route path="/courses/update" component={UpdateCourse} />
