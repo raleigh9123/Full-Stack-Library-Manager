@@ -31,13 +31,13 @@ module.exports = (sequelize) => {
     estimatedTime: {
       type: Sequelize.STRING,
       validate: {
-        is: /[A-z,?!.0-9\s]/g,
+        is: /^$|[A-z,?!.0-9\s]/g,
       },
     },
     materialsNeeded: {
       type: Sequelize.STRING,
       validate: {
-        is: /[A-z,?!.0-9\s]/g,
+        is: /^$|[A-z,?!.0-9\s]/g,
       },
     }
   }, {sequelize});

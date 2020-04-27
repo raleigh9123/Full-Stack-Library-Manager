@@ -27,7 +27,7 @@ const postValidations = [
 
 // GET /api/courses --> STATUS 200 - Returns a list of courses (including the user that owns each course)
 router.get('/', asyncHandler(async (req, res) => {
-    const allCourses = await Course.findAll({ attributes: ['title', 'description', 'estimatedTime', 'materialsNeeded'] });
+    const allCourses = await Course.findAll({ attributes: ['id', 'title', 'description', 'estimatedTime', 'materialsNeeded'] });
     res.status(200).json(allCourses);
 }));
 

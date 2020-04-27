@@ -23,7 +23,7 @@ export default class Utility {
             return [];
         } else if(response.status === 400 || response.status === 401) {
             return response.json().then(data => {
-                return data.errors
+                return data
             })
         } else {
             throw new Error();

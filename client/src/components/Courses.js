@@ -22,9 +22,9 @@ export default class Courses extends React.Component {
         } else {
             const courses = this.state.courses.map((course, index) => {
                 return (
-                <div key={index.toString()} className="grid-33">
+                <div key={course.id.toString()} className="grid-33">
                     <Link to={{
-                        pathname: `/courses/${index + 1}`,
+                        pathname: `/courses/${course.id}`,
                         state: {
                             ...{course}
                         }

@@ -83,7 +83,7 @@ export default class CreateCourse extends React.Component {
                                                         name="materialsNeeded"
                                                         type="text"
                                                         value={materialsNeeded}
-                                                        placeholder='List Materials (separate items with "\n")'
+                                                        placeholder='List Materials (Enter items on new line)'
                                                         onChange={this.change}/>
                                                 </div>
                                             </li>
@@ -118,17 +118,18 @@ export default class CreateCourse extends React.Component {
         const course = {title, description, estimatedTime, materialsNeeded, userId};
         
         context.utility.createCourse(course)
-            .then( errors => {
-                if (errors.length) {
-                    this.setState({ errors });
+            .then(errData => {
+                console.log(errData);
+                if(errData) {
+                    this.setState({errors: errData})
                 } else {
-                
                 }
             })
-            .catch((err) => {
-                console.log(err);
-                // this.props.history.push('/error');
-            });
+            .catch( errors => {
+                console.log('catch runs ' + errors);
+                this.props.history.push('/error');
+            })
+        this.props.history.push('/courses');
     }
 
 

@@ -40,6 +40,7 @@ class CourseDetail extends React.Component {
 
             return (
                 <div>
+
                     <div>
                         <div className="actions--bar">
                             <div className="bounds">
@@ -57,6 +58,8 @@ class CourseDetail extends React.Component {
                             </div>
                         </div>
                     </div>
+
+
                     <div className="bounds course--detail">
                         <div className="grid-66">
                             <div className="course--header">
@@ -85,6 +88,7 @@ class CourseDetail extends React.Component {
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             );
         }
