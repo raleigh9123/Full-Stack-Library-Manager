@@ -13,7 +13,7 @@ const { check, validationResult } = require('express-validator');
 // Include Helper Functions 
 const { asyncHandler, authenticateUser } = require('../helper')
 // Include Courses Sequelize Model
-const { Course } = require('../../models');
+const { Course, User } = require('../../models');
 
 // Set the validations array to create a new post (using express-validator). 
 const postValidations = [
@@ -27,13 +27,23 @@ const postValidations = [
 
 // GET /api/courses --> STATUS 200 - Returns a list of courses (including the user that owns each course)
 router.get('/', asyncHandler(async (req, res) => {
-    const allCourses = await Course.findAll({ attributes: ['title', 'description', 'estimatedTime', 'materialsNeeded'] });
+    const allCourses = await Course.findAll({ attributes: ['id', 'title', 'description', 'estimatedTime', 'materialsNeeded'] });
     res.status(200).json(allCourses);
 }));
 
 // GET /api/courses/:id --> STATUS 200 - Returns a course (including the user that owns the course) for the provided course ID
 router.get('/:id', asyncHandler(async (req, res) => {
-    const singleCourse = await Course.findByPk(req.params.id, { attributes: ['title', 'description', 'estimatedTime', 'materialsNeeded'] });
+    const singleCourse = 
+        await Course.findByPk(
+            req.params.id, 
+            { 
+                attributes: ['title', 'description', 'estimatedTime', 'materialsNeeded'], 
+                include: [{
+                    model: User,
+                    attributes: ['firstName', 'lastName']
+                }] 
+            }
+        );
     if(singleCourse) {
         res.status(200).json(singleCourse);
     } else {
@@ -42,7 +52,7 @@ router.get('/:id', asyncHandler(async (req, res) => {
 }));
 
 // POST /api/courses --> STATUS 201 - Creates a course, sets the Location header to the URI for the course, and returns no content [Includes validation and authentication middleware]
-router.post('/', authenticateUser, [postValidations], asyncHandler(async (req, res) => {
+router.post('/', [postValidations], asyncHandler(async (req, res) => {
     // Attempt to get the validation result from the Request object.
     const validationErrors = validationResult(req);
     if (!validationErrors.isEmpty()) {
@@ -66,7 +76,7 @@ router.post('/', authenticateUser, [postValidations], asyncHandler(async (req, r
             // If Sequelize fails to create a new course, generate friendly error message
             if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeForeignKeyConstraintError') {
                 const errors = error.errors.map(err => err.message);
-                res.status(400).json({'Validation Error(s)': errors});
+                res.status(400).json({ValidationErrors: errors});
             } else {
                 throw error;
             }

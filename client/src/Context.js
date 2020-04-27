@@ -16,8 +16,9 @@ export class Provider extends Component {
 
   render() {
     const value = {
+        utility: this.utility,
         actions: {
-        }
+        },
     };
     return (
       <Context.Provider value={value}>
