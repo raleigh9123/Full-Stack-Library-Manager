@@ -7,15 +7,27 @@ export default class Utility {
         const options = {
             method,
             headers: {
-                'Content-type': 'application/json; charset=utf-8'
-            }
-        }
-
+              "Content-Type": "application/json; charset=utf-8"
+            },
+          };
         if(body!== null) {
             options.body = JSON.stringify(body)
         }
 
         return fetch(url, options)
-    }
+     }
 
+    async createCourse(course) {
+        const response = await this.api("/courses", "POST", course);
+        if(response.status === 201) {
+            return [];
+        } else if(response.status === 400 || response.status === 401) {
+            return response.json().then(data => {
+                return data.errors
+            })
+        } else {
+            throw new Error();
+        }
+    }
+    
 }

@@ -17,17 +17,18 @@ import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
 import UpdateCourse from './components/UpdateCourse';
 
-const CoursesWContext = withContext(Courses);
+const CoursesContext = withContext(Courses);
+const CreateCourseContext = withContext(CreateCourse);
 
 export default () => (
   <Router>
     <div>
       <Route path="/" component={Header} />
       <Switch>
-        <Route exact path="/courses" component={CoursesWContext} />
-        <Route path="/courses/1" component={CourseDetail} />
-        <Route path="/courses/new" component={CreateCourse} />
-        <Route path="/courses/update" component={UpdateCourse} />
+        <Route exact path="/courses" component={CoursesContext} />
+        <Route path="/courses/new" component={CreateCourseContext} />
+        <Route path="/courses/:courseId" component={CourseDetail} />
+        <Route path="/courses/:courseId/update" component={UpdateCourse} />
         <Route path="/signin" component={UserSignIn} />
         <Route path="/signup" component={UserSignUp} />
         <Route path="/" component={NotFound} />
