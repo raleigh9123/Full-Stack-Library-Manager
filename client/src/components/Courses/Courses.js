@@ -23,12 +23,7 @@ export default class Courses extends React.Component {
             const courses = this.state.courses.map((course, index) => {
                 return (
                 <div key={course.id.toString()} className="grid-33">
-                    <Link to={{
-                        pathname: `/courses/${course.id}`,
-                        state: {
-                            ...{course}
-                        }
-                    }} className="course--module course--link">
+                    <Link to={`/courses/${course.id}`} className="course--module course--link">
                         <h4 className="course--label">Course</h4>
                         <h3 className="course--title">{course.title}</h3>
                     </Link>
@@ -40,7 +35,7 @@ export default class Courses extends React.Component {
                 <div className="bounds">
                     {courses}
                     <div className="grid-33">
-                        <Link className="course--module course--add--module" to="/courses/new">
+                        <Link className="course--module course--add--module" to="/courses/create">
                             <h3 className="course--add--title">
                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                             viewBox="0 0 13 13" className="add">

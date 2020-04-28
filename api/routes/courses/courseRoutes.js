@@ -37,7 +37,7 @@ router.get('/:id', asyncHandler(async (req, res) => {
         await Course.findByPk(
             req.params.id, 
             { 
-                attributes: ['title', 'description', 'estimatedTime', 'materialsNeeded'], 
+                attributes: ['id', 'title', 'description', 'estimatedTime', 'materialsNeeded'], 
                 include: [{
                     model: User,
                     attributes: ['firstName', 'lastName']
@@ -85,7 +85,7 @@ router.post('/', [postValidations], asyncHandler(async (req, res) => {
 }));
 
 // PUT /api/courses/:id --> STATUS 204 - Updates a course and returns no content
-router.put('/:id', authenticateUser, [postValidations], asyncHandler(async (req, res) => {
+router.put('/:id', [postValidations], asyncHandler(async (req, res) => {
     // Attempt to get the validation result from the Request object.
     const validationErrors = validationResult(req);
     if (!validationErrors.isEmpty()) {
@@ -99,7 +99,7 @@ router.put('/:id', authenticateUser, [postValidations], asyncHandler(async (req,
         // If course exists, otherwise generate error (404 below)
         if(course) {
             // Check course permissions. Only course authors may edit the course. Otherwise forbid permissions (403 error below)
-            if(course.userId === req.activeUser.id) {
+            // if(course.userId === req.activeUser.id) {
                 try {
                     await course.update(req.body);
                     res.status(204).end();
@@ -112,9 +112,9 @@ router.put('/:id', authenticateUser, [postValidations], asyncHandler(async (req,
                         throw error;
                     }
                 }
-            } else {
-                res.status(403).json({error: 'You do not have permission to modify this course.'})
-            }
+            // } else {
+            //     res.status(403).json({error: 'You do not have permission to modify this course.'})
+            // }
         } else {
             res.status(404).json({error: `No course ID: ${req.params.id}`});
         }
@@ -122,19 +122,19 @@ router.put('/:id', authenticateUser, [postValidations], asyncHandler(async (req,
 }));
 
 // DELETE /api/courses/:id --> STATUS 204 - Deletes a course and returns no content
-router.delete('/:id', authenticateUser, asyncHandler(async (req, res) => {
+router.delete('/:id', asyncHandler(async (req, res) => {
     const course = await Course.findByPk(parseInt(req.params.id, 10))
     // If course exists, otherwise generate 404 error below
     if(course) {
         // Check course permissions. Only course authors may delete the course. Otherwise forbid permissions (403 error below)
-        if(course.userId === req.activeUser.id) {
+        // if(course.userId === req.activeUser.id) {
             await course.destroy();
             res.status(204).end();
         } else {
             res.status(403).json({error: 'You do not have permission to remove this course.'})
-        }
-    } else {
-        res.status(404).json({error: `No course ID: ${req.params.id}`});
+        // }
+    // } else {
+        // res.status(404).json({error: `No course ID: ${req.params.id}`});
     }
 }));
 

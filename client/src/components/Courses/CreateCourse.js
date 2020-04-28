@@ -11,6 +11,41 @@ export default class CreateCourse extends React.Component {
         errors: []
     }
 
+    change = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        
+        this.setState(() => {
+            return {
+                [name]:value
+            };
+        });
+    }
+
+    submit = () => {
+        const { context } = this.props;
+        const { title, description, estimatedTime, materialsNeeded } = this.state;
+        const userId = 1;
+        const course = {title, description, estimatedTime, materialsNeeded, userId};
+        
+        context.utility.createCourse(course)
+            .then(errData => {
+                if(errData.length) {
+                    this.setState({errors: errData})
+                } else {
+                }
+            })
+            .catch( errors => {
+                this.props.history.push('/error');
+            })
+        this.props.history.push('/courses');
+    }
+
+
+    cancel = () => {
+        this.props.history.push('/courses');
+    }
+
     render() {
         const {
             title,
@@ -100,42 +135,4 @@ export default class CreateCourse extends React.Component {
         );
     }
     
-    change = (event) => {
-        const name = event.target.name;
-        const value = event.target.value;
-        
-        this.setState(() => {
-            return {
-                [name]:value
-            };
-        });
-    }
-
-    submit = () => {
-        const { context } = this.props;
-        const { title, description, estimatedTime, materialsNeeded } = this.state;
-        const userId = 1;
-        const course = {title, description, estimatedTime, materialsNeeded, userId};
-        
-        context.utility.createCourse(course)
-            .then(errData => {
-                console.log(errData);
-                if(errData) {
-                    this.setState({errors: errData})
-                } else {
-                }
-            })
-            .catch( errors => {
-                console.log('catch runs ' + errors);
-                this.props.history.push('/error');
-            })
-        this.props.history.push('/courses');
-    }
-
-
-    cancel = () => {
-        this.props.history.push('/courses');
-    }
-
-
 }

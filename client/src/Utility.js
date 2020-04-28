@@ -30,4 +30,35 @@ export default class Utility {
         }
     }
     
+    async updateCourse(course) {
+        const id = course.id;
+        const response = await this.api(`/courses/${id}`, "PUT", course);
+        if(response.status === 204) {
+            return [];
+        } else if(response.status === 400 || response.status === 401) {
+            return response.json().then(data => {
+                return data
+            })
+        } else {
+            throw new Error();
+        }
+    }
+
+    async deleteCourse(id) {
+        const response = await this.api(`/courses/${id}`, "DELETE");
+        if(response.status === 204) {
+            return [];
+        } else {
+            throw new Error();
+        }
+    }
+
+    async createUser() {
+
+    }
+
+    async getUser() {
+
+    }
+
 }

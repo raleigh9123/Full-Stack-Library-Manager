@@ -1,10 +1,7 @@
 import React from 'react';
-import {
-    Link,
-    withRouter 
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-class CourseDetail extends React.Component {
+export default class CourseDetail extends React.Component {
     
     async componentDidMount() {
         const id = this.props.match.params.courseId;
@@ -20,13 +17,31 @@ class CourseDetail extends React.Component {
     state = {
         course: [],
         loading: true,
+        // this.handleCancel = this.handleCancel.bind(this)
     }
+
+    
+    handleCancel = (e) => {
+        e.preventDefault()
+        const { context } = this.props;
+        const id = this.state.course.id;
+    
+        context.utility.deleteCourse(id)
+            .then(() => {
+                this.props.history.push('/courses');
+            })
+            .catch (() => {
+                this.props.history.push('/error');
+            })
+    }
+
     render() {
         if(this.state.loading) {
             return null
         } else {
-            const { description, estimatedTime, materialsNeeded, title, User } = this.state.course;
-            const { firstName, lastName } = User
+            const { course } = this.state;
+            const { id, description, estimatedTime, materialsNeeded, title, User } = course;
+            const { firstName, lastName } = User;
             
             let materialsNeededPrettyPrint;
             if(materialsNeeded) {
@@ -47,11 +62,12 @@ class CourseDetail extends React.Component {
                                 <div className="grid-100">
                                     <span>
                                         <Link className="button" to={{
-                                            //Add Update Course Redirect
+                                            pathname: `/courses/${id}/update`,
+                                            state: {
+                                                ...{course}
+                                            }
                                         }}>Update Course</Link>
-                                        <Link className="button" to={{
-                                            //Add Delete Course Redirect
-                                        }}>Delete Course</Link>
+                                        <button className="button" onClick={this.handleCancel}>Delete Course</button>
                                     </span>
                                     <Link className="button button-secondary" to="/courses">Return to List</Link>
                                 </div>
@@ -94,5 +110,3 @@ class CourseDetail extends React.Component {
         }
     }
 }
-
-export default withRouter(CourseDetail);
