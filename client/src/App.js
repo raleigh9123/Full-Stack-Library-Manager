@@ -15,14 +15,18 @@ import NotFound from './components/NotFound';
 import Courses from './components/Courses/Courses';
 import CourseDetail from './components/Courses/CourseDetail';
 import CreateCourse from './components/Courses/CreateCourse';
-import UserSignIn from './components/UserSignIn';
-import UserSignUp from './components/UserSignUp';
 import UpdateCourse from './components/Courses/UpdateCourse';
 
+import UserSignIn from './components/Users/UserSignIn';
+import UserSignUp from './components/Users/UserSignUp';
+
 const CoursesContext = withContext(Courses);
+const CourseDetailContext = withContext(CourseDetail);
 const CreateCourseContext = withContext(CreateCourse);
 const UpdateCourseContext = withContext(UpdateCourse);
-const CourseDetailContext = withContext(CourseDetail);
+
+const UserSignInContext = withContext(UserSignIn);
+const UserSignUpContext = withContext(UserSignUp);
 
 
 export default () => (
@@ -37,8 +41,8 @@ export default () => (
         <Route path="/courses/create" component={CreateCourseContext} />
         <Route path="/courses/:courseId/update" component={UpdateCourseContext} />
         <Route path="/courses/:courseId" component={CourseDetailContext} />
-        <Route path="/signin" component={UserSignIn} />
-        <Route path="/signup" component={UserSignUp} />
+        <Route path="/signin" component={UserSignInContext} />
+        <Route path="/signup" component={UserSignUpContext} />
         <Route path="/signout" />
         {/* If Route is not found, render error component render error component */}
         <Route component={NotFound} />

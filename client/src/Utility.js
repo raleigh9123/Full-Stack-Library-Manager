@@ -20,7 +20,7 @@ export default class Utility {
     async createCourse(course) {
         const response = await this.api("/courses", "POST", course);
         if(response.status === 201) {
-            return [];
+            return {success: true};
         } else if(response.status === 400 || response.status === 401) {
             return response.json().then(data => {
                 return data
@@ -53,11 +53,24 @@ export default class Utility {
         }
     }
 
-    async createUser() {
-
+    async createUser(user) {
+        const response = await this.api("/users", "POST", user);
+        
+        if(response.status === 201) {
+            return {success: true}
+        } else if (response.status === 400 || response.status === 401) {
+            return response.json().then(data => {
+                console.log(data);
+                
+                return data
+            })
+        } else {
+            throw new Error();
+        }
     }
 
-    async getUser() {
+    async getUser(user) {
+        console.log(user);
 
     }
 

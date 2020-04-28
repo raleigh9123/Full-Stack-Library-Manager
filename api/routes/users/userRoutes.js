@@ -37,17 +37,17 @@ const userValidations = [
         .isLength({ min: 8, max: 20 })
         .withMessage('Please provide a value for "password" that is between 8 and 20 characters in length'),
     // Password Confirmation custom validator
-    // check('passwordConfirmation')
-    //     .exists({ checkNull: true, checkFalsy: true })
-    //     .withMessage('Please provide a value for "passwordConfirmation"')
-    //     .custom((value, { req }) => {
-    //       // Compare the `password` and `passwordConfirmation` fields to find match
-    //       if (value && req.body.password && value !== req.body.password) {
-    //         throw new Error('Ensure "password" and passwordConfirmation" match');
-    //       }
-    //       // If match continue to route handler
-    //       return true;
-    //     }),
+    check('confirmPassword')
+        .exists({ checkNull: true, checkFalsy: true })
+        .withMessage('Please provide a value for "Confirm Password"')
+        .custom((value, { req }) => {
+          // Compare the `password` and `passwordConfirmation` fields to find match
+          if (value && req.body.password && value !== req.body.password) {
+            throw new Error('Ensure passwords match');
+          }
+          // If match continue to route handler
+          return true;
+        }),
 ];
 
 // GET /api/users --> STATUS 200 - Returns the currently authenticated user

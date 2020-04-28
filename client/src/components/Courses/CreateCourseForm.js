@@ -1,4 +1,5 @@
 import React from 'react';
+import ErrorDisplay from '../ErrorDisplay';
 
 export default (props) => {
     const {
@@ -31,22 +32,3 @@ export default (props) => {
         </div>
     );
 }
-
-function ErrorDisplay({errors}) {
-    
-    if(errors.length === 0) {
-        return null
-    } else {
-        return (
-            <div>
-                <h2 className="validation--errors--label">Validation Errors</h2>
-                <div className="validation-errors">
-                    <ul>
-                        {errors.ValidationErrors.map((error, i) => <li key={i}>{error}</li>)}
-                    </ul>
-                </div>
-            </div>
-        )
-   }
-}
-

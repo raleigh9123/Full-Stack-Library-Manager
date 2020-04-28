@@ -8,7 +8,7 @@ export default class CreateCourse extends React.Component {
         estimatedTime: '',
         materialsNeeded: '',
         author: '',
-        errors: []
+        errors: null
     }
 
     change = (event) => {
@@ -30,15 +30,15 @@ export default class CreateCourse extends React.Component {
         
         context.utility.createCourse(course)
             .then(errData => {
-                if(errData.length) {
-                    this.setState({errors: errData})
-                } else {
+                if(errData.success) {
+                    this.props.history.push('/courses')
+                } else if (errData) {
+                    this.setState(() => { return {errors: errData}})
                 }
             })
             .catch( errors => {
                 this.props.history.push('/error');
             })
-        this.props.history.push('/courses');
     }
 
 
