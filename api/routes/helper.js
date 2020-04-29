@@ -24,7 +24,7 @@ function asyncHandler(callback) {
 
 // Custom Authentication Middleware
 const authenticateUser = async(req, res, next) => {
-    let message = null;
+    let error = null;
     // Parse user credentials from authorization header
     const credentials = auth(req);
     if(credentials) {
@@ -41,16 +41,16 @@ const authenticateUser = async(req, res, next) => {
                 // Add new "Active User" to request object and pass to route handler as the currently logged in user.
                 req.activeUser = user;
             } else {
-                message = `Invalid login credentials for: ${credentials.name}. Please enter a valid email and password.`
+                error = `Invalid login credentials for: ${credentials.name}. Please enter a valid email and password.`
             } 
         } else {
-            message = `No user: ${credentials.name} found.`
+            error = `No user: ${credentials.name} found.`
         }
     } else {
-        message = 'Auth header not found.'
+        error = 'Auth header not found.'
     }
-    if(message) {
-        res.status(401).json({message: `Access denied: ${message}`})
+    if(error) {
+        res.status(401).json({error: `Access denied: ${error}`})
     } else {
         next();
     }

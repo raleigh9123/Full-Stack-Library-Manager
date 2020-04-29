@@ -1,13 +1,46 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ErrorDisplay from '../ErrorDisplay';
 
 export default class UserSignIn extends React.Component {
 
     state = {
-        emailAddress: '',
+        username: '',
         password: '',
+        errors: false,
     }
 
+    change = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+
+        this.setState(() => {
+            return {
+                [name]:value
+            }
+        })
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+
+        const { context } = this.props
+        const { username, password } = this.state;
+        
+        context.actions.signIn(username, password)
+            .then(user => {
+                if(user.emailAddress) {
+                    this.props.history.push('/courses')
+                } else if (user) {
+                    this.setState(() => {return {errors: user}})
+                }
+            })
+            .catch(error => {
+                console.log(error);
+                this.props.history.push('/error')
+            });
+
+    }
 
     handleCancel = (e) => {
         e.preventDefault();
@@ -15,20 +48,23 @@ export default class UserSignIn extends React.Component {
     }
 
     render() {
+        const { errors } = this.state
         return (
             <div>
                 <div className="bounds">
                     <div className="grid-33 centered signin">
                     <h1>Sign In</h1>
+                    <ErrorDisplay errors={errors} />
                     <div>
-                        <form>
+                        <form onSubmit={this.handleSubmit}>
                             <div>
                                 <input
-                                    id="emailAddress"
-                                    name="emailAddress"
+                                    id="username"
+                                    name="username"
                                     type="text"
                                     placeholder="Email Address"
-                                    value={this.state.emailAddress}/>
+                                    onChange={this.change}
+                                    value={this.state.username}/>
                             </div>
                             <div>
                                 <input
@@ -36,6 +72,7 @@ export default class UserSignIn extends React.Component {
                                     name="password"
                                     type="password"
                                     placeholder="Password"
+                                    onChange={this.change}
                                     value={this.state.password}/>
                             </div>
                             <div className="grid-100 pad-bottom">

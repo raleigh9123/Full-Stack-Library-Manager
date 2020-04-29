@@ -7,6 +7,7 @@ const Context = React.createContext();
 export class Provider extends Component {
 
   state = {
+    authenticatedUser: null
   };
 
   constructor() {
@@ -15,9 +16,13 @@ export class Provider extends Component {
   }
 
   render() {
+    const { authenticatedUser } = this.state;
+    
     const value = {
+        authenticatedUser,
         utility: this.utility,
         actions: {
+          signIn: this.signIn,
         },
     };
     return (
@@ -25,6 +30,21 @@ export class Provider extends Component {
         {this.props.children}
       </Context.Provider>  
     );
+  }
+
+  signIn = async(emailAddress, password) => {
+      const user = await this.utility.getUser(emailAddress, password);
+      console.log(user);
+      
+      if(user) {
+        this.setState(() => {
+          return {
+            authenticatedUser: user
+          }
+        })
+      }
+
+      return user
   }
 
 }

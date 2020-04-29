@@ -20,6 +20,8 @@ import UpdateCourse from './components/Courses/UpdateCourse';
 import UserSignIn from './components/Users/UserSignIn';
 import UserSignUp from './components/Users/UserSignUp';
 
+const HeaderContext = withContext(Header);
+
 const CoursesContext = withContext(Courses);
 const CourseDetailContext = withContext(CourseDetail);
 const CreateCourseContext = withContext(CreateCourse);
@@ -32,7 +34,7 @@ const UserSignUpContext = withContext(UserSignUp);
 export default () => (
   <Router>
     <div>
-      <Route path="/" component={Header} />
+      <Route path="/" component={HeaderContext} />
       <Switch>
         <Route exact path="/">
           <Redirect to="/courses"/>

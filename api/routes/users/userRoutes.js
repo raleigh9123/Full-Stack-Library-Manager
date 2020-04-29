@@ -53,7 +53,7 @@ const userValidations = [
 // GET /api/users --> STATUS 200 - Returns the currently authenticated user
 router.get('/', authenticateUser, asyncHandler(async(req, res) => {
     const authorizedUser = req.activeUser;
-    const user = await User.findByPk(authorizedUser.id, { attributes: ['firstName', 'lastName', 'emailAddress'] }); 
+    const user = await User.findByPk(authorizedUser.id, { attributes: ['id', 'firstName', 'lastName', 'emailAddress'] }); 
     res.status(200).json(user);
 }));
 
