@@ -5,7 +5,7 @@ export default class UpdateCourse extends React.Component {
 
     componentDidMount() {
         const { course } = this.props.location.state;
-        const { id, title, description, author, estimatedTime, materialsNeeded, User } = course;
+        const { id, title, description, estimatedTime, materialsNeeded, User } = course;
         this.setState({ 
             id,
             title, 
@@ -35,7 +35,7 @@ export default class UpdateCourse extends React.Component {
     submit = () => {
         const { context } = this.props;
         const { id, title, description, estimatedTime, materialsNeeded } = this.state;
-        const userId = 1;
+        const userId = context.authenticatedUser.id;
         const course = { id, title, description, estimatedTime, materialsNeeded, userId }
 
         context.utility.updateCourse(course)
@@ -95,7 +95,7 @@ export default class UpdateCourse extends React.Component {
                                                     onChange={this.change}
                                                     value={title} />
                                             </div>
-                                            <p>{author}</p>
+                                            <p>By {author}</p>
                                         </div>
                                         <div className="course--description">
                                             <div>

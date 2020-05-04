@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 
 export default class CourseDetail extends React.Component {
     
@@ -17,7 +18,7 @@ export default class CourseDetail extends React.Component {
     state = {
         course: [],
         loading: true,
-        // this.handleCancel = this.handleCancel.bind(this)
+        authenticatedUser: this.props.context.authenticatedUser || null
     }
 
     
@@ -39,42 +40,37 @@ export default class CourseDetail extends React.Component {
         if(this.state.loading) {
             return null
         } else {
-            const { course } = this.state;
-            const { id, description, estimatedTime, materialsNeeded, title, User } = course;
-            const { firstName, lastName } = User;
-            
-            let materialsNeededPrettyPrint;
-            if(materialsNeeded) {
-                const materialsArray = materialsNeeded.split('* ')
-                materialsNeededPrettyPrint = materialsArray.filter(item => item).map((string, stringIndex) => {
-                    return (
-                        <li key={stringIndex}>{string}</li>
-                    )
-                })
+            const { course, authenticatedUser } = this.state;
+            const {id:courseId, description, estimatedTime, materialsNeeded, title, User } = course;
+            const { firstName, lastName, id: userId} = User;
+
+            let authorized;
+            if(authenticatedUser) {
+                authenticatedUser.id === userId ? authorized = true : authorized = false
             }
 
             return (
                 <div>
-
                     <div>
                         <div className="actions--bar">
                             <div className="bounds">
                                 <div className="grid-100">
-                                    <span>
-                                        <Link className="button" to={{
-                                            pathname: `/courses/${id}/update`,
-                                            state: {
-                                                ...{course}
-                                            }
-                                        }}>Update Course</Link>
-                                        <button className="button" onClick={this.handleCancel}>Delete Course</button>
-                                    </span>
+                                    {authorized && (
+                                        <span>
+                                            <Link className="button" to={{
+                                                pathname: `/courses/${courseId}/update`,
+                                                state: {
+                                                    ...{course}
+                                                }
+                                            }}>Update Course</Link>
+                                            <button className="button" onClick={this.handleCancel}>Delete Course</button>
+                                        </span>
+                                    )}
                                     <Link className="button button-secondary" to="/courses">Return to List</Link>
                                 </div>
                             </div>
                         </div>
                     </div>
-
 
                     <div className="bounds course--detail">
                         <div className="grid-66">
@@ -84,7 +80,7 @@ export default class CourseDetail extends React.Component {
                             <p>By {firstName} {lastName}</p>
                             </div>
                             <div className="course--description">
-                            <p>{description}</p>
+                                <ReactMarkdown source={description} />
                             </div>
                         </div>
                         <div className="grid-25 grid-right">
@@ -97,7 +93,7 @@ export default class CourseDetail extends React.Component {
                                 <li className="course--stats--list--item">
                                     <h4>Materials Needed</h4>
                                     <ul>
-                                        {materialsNeededPrettyPrint}
+                                        <ReactMarkdown source={materialsNeeded} />
                                     </ul>
                                 </li>
                             </ul>

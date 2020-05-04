@@ -35,7 +35,8 @@ export default class UserSignUp extends React.Component {
         context.utility.createUser(user)
             .then(errData => {
                 if(errData.success) {
-                    this.props.history.push('/courses');
+                    context.actions.signIn(emailAddress, password)
+                        .then(() => { this.props.history.push('/courses') });
                 } else if (errData) {
                     this.setState(() => {return {errors: errData}})
                 }

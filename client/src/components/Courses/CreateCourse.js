@@ -25,7 +25,7 @@ export default class CreateCourse extends React.Component {
     submit = () => {
         const { context } = this.props;
         const { title, description, estimatedTime, materialsNeeded } = this.state;
-        const userId = 1;
+        const userId = context.authenticatedUser.id;
         const course = {title, description, estimatedTime, materialsNeeded, userId};
         
         context.utility.createCourse(course)
@@ -44,6 +44,14 @@ export default class CreateCourse extends React.Component {
 
     cancel = () => {
         this.props.history.push('/courses');
+    }
+
+    componentDidMount() {
+        this.setState(() => {
+            return {
+                author: `${this.props.context.authenticatedUser.firstName} ${this.props.context.authenticatedUser.lastName}` 
+            }
+        })
     }
 
     render() {
@@ -66,7 +74,7 @@ export default class CreateCourse extends React.Component {
                             cancel={this.cancel}
                             errors={errors}
                             formElements={() => (
-                                <React.Fragment>
+                                <>
                                     <div className="grid-66">
                                         <div className="course--header">
                                             <h4 className="course--label">Course</h4>
@@ -80,7 +88,7 @@ export default class CreateCourse extends React.Component {
                                                     className="input-title course--title--input"
                                                     onChange={this.change}/>
                                             </div>
-                                            <p>By Joe Smith</p>
+                                            <p>By {author}</p>
                                         </div>
                                         <div className="course--description">
                                             <div>
@@ -118,14 +126,14 @@ export default class CreateCourse extends React.Component {
                                                         name="materialsNeeded"
                                                         type="text"
                                                         value={materialsNeeded}
-                                                        placeholder='List Materials (Enter items on new line)'
+                                                        placeholder='List Materials (Enter list items with "* " on a new line)'
                                                         onChange={this.change}/>
                                                 </div>
                                             </li>
                                             </ul>
                                         </div>
                                     </div>
-                                </React.Fragment>
+                                </>
                             )}
                         >
                         </CreateCourseForm>

@@ -1,8 +1,7 @@
 import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
-export default (props) => {
-    const { context } = props;
+export default ({context}) => {
     const authUser = context.authenticatedUser;
     return (
         <div className="header">

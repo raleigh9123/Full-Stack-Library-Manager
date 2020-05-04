@@ -24,13 +24,14 @@ export default class UserSignIn extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        const { context } = this.props
+        const { context } = this.props;
+        const { from } = this.props.location.state || { from: { pathname: '/courses' }}
         const { username, password } = this.state;
         
         context.actions.signIn(username, password)
             .then(user => {
                 if(user.emailAddress) {
-                    this.props.history.push('/courses')
+                    this.props.history.push(from)
                 } else if (user) {
                     this.setState(() => {return {errors: user}})
                 }
@@ -63,6 +64,7 @@ export default class UserSignIn extends React.Component {
                                     name="username"
                                     type="text"
                                     placeholder="Email Address"
+                                    autoComplete="username"
                                     onChange={this.change}
                                     value={this.state.username}/>
                             </div>
@@ -73,6 +75,7 @@ export default class UserSignIn extends React.Component {
                                     type="password"
                                     placeholder="Password"
                                     onChange={this.change}
+                                    autoComplete="current-password"
                                     value={this.state.password}/>
                             </div>
                             <div className="grid-100 pad-bottom">

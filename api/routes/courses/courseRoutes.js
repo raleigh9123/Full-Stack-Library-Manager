@@ -40,7 +40,7 @@ router.get('/:id', asyncHandler(async (req, res) => {
                 attributes: ['id', 'title', 'description', 'estimatedTime', 'materialsNeeded'], 
                 include: [{
                     model: User,
-                    attributes: ['firstName', 'lastName']
+                    attributes: ['firstName', 'lastName', 'id']
                 }] 
             }
         );

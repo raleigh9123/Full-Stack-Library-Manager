@@ -5,7 +5,7 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom';
-import withContext from './Context';
+import {withContext, PrivateRoute} from './Context';
 
 import './styles/global.css';
 
@@ -19,6 +19,7 @@ import UpdateCourse from './components/Courses/UpdateCourse';
 
 import UserSignIn from './components/Users/UserSignIn';
 import UserSignUp from './components/Users/UserSignUp';
+import UserSignOut from './components/Users/UserSignOut';
 
 const HeaderContext = withContext(Header);
 
@@ -29,6 +30,7 @@ const UpdateCourseContext = withContext(UpdateCourse);
 
 const UserSignInContext = withContext(UserSignIn);
 const UserSignUpContext = withContext(UserSignUp);
+const UserSignOutContext = withContext(UserSignOut);
 
 
 export default () => (
@@ -40,12 +42,12 @@ export default () => (
           <Redirect to="/courses"/>
         </Route>
         <Route exact path="/courses" component={CoursesContext} />
-        <Route path="/courses/create" component={CreateCourseContext} />
-        <Route path="/courses/:courseId/update" component={UpdateCourseContext} />
+        <PrivateRoute path="/courses/create" component={CreateCourseContext} />
+        <PrivateRoute path="/courses/:courseId/update" component={UpdateCourseContext} />
         <Route path="/courses/:courseId" component={CourseDetailContext} />
         <Route path="/signin" component={UserSignInContext} />
         <Route path="/signup" component={UserSignUpContext} />
-        <Route path="/signout" />
+        <Route path="/signout" component={UserSignOutContext}/>
         {/* If Route is not found, render error component render error component */}
         <Route component={NotFound} />
       </Switch>
