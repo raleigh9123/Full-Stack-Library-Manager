@@ -47,7 +47,6 @@ router.get('/:id', asyncHandler(async (req, res) => {
     if(singleCourse) {
         res.status(200).json(singleCourse);
     } else {
-        res.failure = true;
         res.status(404).json({error:"No article found"})
     }
 }));
