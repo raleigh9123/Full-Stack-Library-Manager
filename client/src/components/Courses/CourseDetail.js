@@ -41,7 +41,7 @@ export default class CourseDetail extends React.Component {
             return null
         } else {
             const { course, authenticatedUser } = this.state;
-            const {id:courseId, description, estimatedTime, materialsNeeded, title, User } = course;
+            const { id:courseId, description, estimatedTime, materialsNeeded, title, User } = course;
             const { firstName, lastName, id: userId} = User;
 
             let authorized;

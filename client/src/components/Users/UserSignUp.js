@@ -43,7 +43,7 @@ export default class UserSignUp extends React.Component {
             })
             .catch(error => {
                 console.log(error);
-                this.props.history.push('/error')
+                this.props.history.push('/unhandlederror')
             })
 
     }

@@ -47,7 +47,6 @@ export default class UpdateCourse extends React.Component {
                 this.props.history.push(`/courses/${course.id}`)
             })
             .catch(errors => {
-                console.log('catch runs ' + errors);
                 this.props.history.push('/error');
             })
     }

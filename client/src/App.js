@@ -11,6 +11,8 @@ import './styles/global.css';
 
 import Header from './components/Header';
 import NotFound from './components/NotFound';
+import Forbidden from './components/Forbidden';
+import UnhandledError from './components/UnhandledError';
 
 import Courses from './components/Courses/Courses';
 import CourseDetail from './components/Courses/CourseDetail';
@@ -48,6 +50,8 @@ export default () => (
         <Route path="/signin" component={UserSignInContext} />
         <Route path="/signup" component={UserSignUpContext} />
         <Route path="/signout" component={UserSignOutContext}/>
+        <Route path="/forbidden" component={Forbidden} />
+        <Route path="/error" component={UnhandledError} />
         {/* If Route is not found, render error component render error component */}
         <Route component={NotFound} />
       </Switch>

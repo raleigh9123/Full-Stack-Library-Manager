@@ -11,6 +11,9 @@ export default class Courses extends React.Component {
                     loading:false
                 })
             })
+            .catch(() => {
+                this.props.location.push('/error')
+            })
     }
     state = {
         courses: [],
