@@ -9,10 +9,19 @@ export default class CourseDetail extends React.Component {
         await fetch(`http://localhost:5000/api/courses/${id}`)
             .then(res => res.json())
             .then((data) => {
-                this.setState({
-                    course: data,
-                    loading: false
-                })
+                
+                if(data.error) {
+                    this.props.history.push('/notfound');
+                } else {
+                    this.setState({
+                        course: data,
+                        loading: false
+                    })
+                }
+            })
+            .catch((errors) => {
+                console.log(errors);
+                
             })
     }
     state = {
