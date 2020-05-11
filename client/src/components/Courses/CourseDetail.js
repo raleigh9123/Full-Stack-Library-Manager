@@ -68,9 +68,6 @@ export default class CourseDetail extends React.Component {
                                         <span>
                                             <Link className="button" to={{
                                                 pathname: `/courses/${courseId}/update`,
-                                                state: {
-                                                    ...{course}
-                                                }
                                             }}>Update Course</Link>
                                             <button className="button" onClick={this.handleCancel}>Delete Course</button>
                                         </span>

@@ -4,6 +4,13 @@ import ErrorDisplay from '../ErrorDisplay';
 
 export default class UserSignIn extends React.Component {
 
+    componentDidMount() {
+        const { context } = this.props;
+        if( context.authenticatedUser ) {
+            this.props.history.push('/courses');
+        }
+    }
+
     state = {
         username: '',
         password: '',

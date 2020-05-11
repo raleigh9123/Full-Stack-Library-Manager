@@ -52,6 +52,7 @@ export default () => (
         <Route path="/signout" component={UserSignOutContext}/>
         <Route path="/forbidden" component={Forbidden} />
         <Route path="/error" component={UnhandledError} />
+        <Route path="/notfound" component={NotFound} />
         {/* If Route is not found, render error component render error component */}
         <Route component={NotFound} />
       </Switch>

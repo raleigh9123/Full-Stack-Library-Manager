@@ -41,7 +41,7 @@ export default class Utility {
         const id = course.id;
         const response = await this.api(`/courses/${id}`, "PUT", course);
         if(response.status === 204) {
-            return [];
+            return null;
         } else if(response.status === 400 || response.status === 401) {
             return response.json().then(data => {
                 return data
