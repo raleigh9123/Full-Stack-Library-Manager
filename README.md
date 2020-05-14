@@ -40,7 +40,7 @@ The following directories exist in this project:
 ## Getting Started
 
 First, navigate to the /client directory and install the directory's dependencies using `npm install`.
-After installing dependencies, run `npm run seed`. to seed a new development database.
+After installing dependencies, open /api and run `npm run seed`. to seed a new development database.
 Start the api with `npm start`.
 
 Navigate to the /api directory and install the directory's dependencies using `npm install`.
